@@ -1,0 +1,9 @@
+#wrapper {
+    -fx-background-color: "#E5E5E5";
+}
+
+.button {
+    -fx-background-color: "#FCA311";
+    -fx-border-radius: 50px;
+    -fx-background-radius: 50px;
+}

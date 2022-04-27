@@ -1,1 +1,9 @@
 rootProject.name = "MonitorizareAngajati"
+include 'MonitorizareAngajatiModel'
+include 'MonitorizareAngajatiPersistence'
+include 'MonitorizareAngajatiServer'
+include 'MonitorizareAngajatiServices'
+include 'MonitorizareAngajatiController'
+include 'MonitorizareAngajatiNetworking'
+include 'MonitorizareAngajatiClient'
+

@@ -13,6 +13,13 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/MonitorizareAngajatiClient" />
+            <option value="$PROJECT_DIR$/MonitorizareAngajatiController" />
+            <option value="$PROJECT_DIR$/MonitorizareAngajatiModel" />
+            <option value="$PROJECT_DIR$/MonitorizareAngajatiNetworking" />
+            <option value="$PROJECT_DIR$/MonitorizareAngajatiPersistence" />
+            <option value="$PROJECT_DIR$/MonitorizareAngajatiServer" />
+            <option value="$PROJECT_DIR$/MonitorizareAngajatiServices" />
           </set>
         </option>
       </GradleProjectSettings>

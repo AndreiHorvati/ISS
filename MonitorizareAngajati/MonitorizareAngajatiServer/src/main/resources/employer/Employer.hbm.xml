@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="model.Employer"
+           table="Employers">
+
+        <id name="id" column="id" type="long">
+            <generator class="native"/>
+        </id>
+
+        <property
+                name="firstName"
+                column="first_name" type="java.lang.String"/>
+
+        <property
+                name="lastName"
+                column="last_name" type="java.lang.String"/>
+
+        <property
+                name="username"
+                column="username" type="java.lang.String"/>
+
+        <property
+                name="password"
+                column="password" type="java.lang.String"/>
+    </class>
+</hibernate-mapping>

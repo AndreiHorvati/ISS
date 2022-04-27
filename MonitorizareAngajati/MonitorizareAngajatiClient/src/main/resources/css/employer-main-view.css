@@ -1,0 +1,13 @@
+.button {
+    -fx-background-color: "#FCA311";
+    -fx-border-radius: 50px;
+    -fx-background-radius: 50px;
+}
+
+#menu {
+    -fx-background-color: "#14213D";
+}
+
+#gridPane {
+    -fx-background-color: "#E5E5E5";
+}

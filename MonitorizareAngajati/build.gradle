@@ -33,6 +33,15 @@ javafx {
 }
 
 dependencies {
+    implementation project (':MonitorizareAngajatiModel')
+    implementation project (':MonitorizareAngajatiPersistence')
+
+    implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.16.1'
+    implementation 'org.hibernate:hibernate-core:5.2.10.Final'
+    implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
+    implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
+    implementation group: 'org.javassist', name: 'javassist', version: '3.28.0-GA'
+
     implementation('org.controlsfx:controlsfx:11.1.0')
     implementation('com.dlsc.formsfx:formsfx-core:11.3.2') {
         exclude(group: 'org.openjfx')

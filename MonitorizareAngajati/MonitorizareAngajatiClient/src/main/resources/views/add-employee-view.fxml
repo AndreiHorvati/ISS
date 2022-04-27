@@ -8,55 +8,53 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="wrapper" prefHeight="431.0" prefWidth="273.0" stylesheets="@../css/add-employee-view.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-    <children>
-        <VBox prefHeight="431.0" prefWidth="273.0">
-            <children>
-                <Label text="First Name:" textFill="WHITE">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets left="25.0" top="50.0" />
-                    </VBox.margin>
-                </Label>
-                <TextField maxWidth="215.0" prefHeight="26.0" prefWidth="215.0">
-                    <VBox.margin>
-                        <Insets left="25.0" top="5.0" />
-                    </VBox.margin>
-                </TextField>
-                <Label text="Last Name:" textFill="WHITE">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets left="25.0" top="40.0" />
-                    </VBox.margin>
-                </Label>
-            <TextField maxWidth="214.0" prefHeight="26.0" prefWidth="214.0">
-               <VBox.margin>
-                  <Insets left="25.0" top="5.0" />
-               </VBox.margin>
-            </TextField>
-                <Label text="Username:" textFill="WHITE">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets left="25.0" top="40.0" />
-                    </VBox.margin>
-                </Label>
-            <TextField maxWidth="213.0" prefHeight="26.0" prefWidth="213.0">
-               <VBox.margin>
-                  <Insets left="25.0" top="5.0" />
-               </VBox.margin>
-            </TextField>
-                <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="113.0" text="Add Employee">
-                    <VBox.margin>
-                        <Insets left="80.0" top="50.0" />
-                    </VBox.margin>
-                </Button>
-            </children>
-        </VBox>
-    </children>
+<AnchorPane fx:id="wrapper" prefHeight="431.0" prefWidth="273.0"
+            stylesheets="@../css/add-employee-view.css" fx:controller="AddEmployeeViewController"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox prefHeight="431.0" prefWidth="273.0">
+        <Label text="First Name:" textFill="WHITE">
+            <font>
+                <Font size="18.0"/>
+            </font>
+            <VBox.margin>
+                <Insets left="25.0" top="50.0"/>
+            </VBox.margin>
+        </Label>
+        <TextField fx:id="firstNameTextField" maxWidth="215.0" prefHeight="26.0" prefWidth="215.0">
+            <VBox.margin>
+                <Insets left="25.0" top="5.0"/>
+            </VBox.margin>
+        </TextField>
+        <Label text="Last Name:" textFill="WHITE">
+            <font>
+                <Font size="18.0"/>
+            </font>
+            <VBox.margin>
+                <Insets left="25.0" top="40.0"/>
+            </VBox.margin>
+        </Label>
+        <TextField fx:id="lastNameTextField" maxWidth="214.0" prefHeight="26.0" prefWidth="214.0">
+            <VBox.margin>
+                <Insets left="25.0" top="5.0"/>
+            </VBox.margin>
+        </TextField>
+        <Label text="Username:" textFill="WHITE">
+            <font>
+                <Font size="18.0"/>
+            </font>
+            <VBox.margin>
+                <Insets left="25.0" top="40.0"/>
+            </VBox.margin>
+        </Label>
+        <TextField fx:id="usernameTextField" maxWidth="213.0" prefHeight="26.0" prefWidth="213.0">
+            <VBox.margin>
+                <Insets left="25.0" top="5.0"/>
+            </VBox.margin>
+        </TextField>
+        <Button fx:id="addEmployeeButton" onAction="#onAddEmployeeButtonPressed" mnemonicParsing="false" prefHeight="41.0" prefWidth="113.0" text="Add Employee">
+            <VBox.margin>
+                <Insets left="80.0" top="50.0"/>
+            </VBox.margin>
+        </Button>
+    </VBox>
 </AnchorPane>

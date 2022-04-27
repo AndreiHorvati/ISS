@@ -22,5 +22,14 @@
         <property
                 name="username"
                 column="username"  type="java.lang.String"/>
+
+        <property
+                name="hour"
+                column="hour"  type="int"/>
+
+        <many-to-one
+                name="employer"
+                cascade="all"
+                column="employer_id"/>
     </class>
 </hibernate-mapping>

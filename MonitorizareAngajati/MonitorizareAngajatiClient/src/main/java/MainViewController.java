@@ -12,14 +12,13 @@ import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable, IObserver {
     private IController controller;
-    SceneController sceneController;
-    //CompetitionsViewController competitionsViewController;
-    //SearchViewController searchViewController;
+    private SceneController sceneController;
+    private EmployeesListViewController employeesListViewController;
 
-    Employer currentEmployer;
+    private Employer currentEmployer;
 
     @FXML
-    GridPane gridPane;
+    private GridPane gridPane;
 
     public void setSceneController(SceneController sceneController) {
         this.sceneController = sceneController;
@@ -77,16 +76,6 @@ public class MainViewController implements Initializable, IObserver {
         */
     }
 
-    public void loadEmployerMainView() {
-        FXMLLoader loader = new FXMLLoader(MainApplicationClient.class.getResource("views/employer-main-view.fxml"));
-
-        loadMainView(loader);
-
-        //this.competitionsViewController = loader.getController();
-        //this.competitionsViewController.setController(controller);
-        //this.competitionsViewController.initModel();
-    }
-
     /*
     public void onCompetitionsButtonPressed() throws Exception {
         loadCompetitionsMenu();
@@ -132,6 +121,10 @@ public class MainViewController implements Initializable, IObserver {
     public void loadEmployeesListView() {
         FXMLLoader loader = new FXMLLoader(MainApplicationClient.class.getResource("views/employees-list-view.fxml"));
         loadMainView(loader);
+
+        this.employeesListViewController = loader.getController();
+        this.employeesListViewController.setController(this.controller);
+        this.employeesListViewController.setCurrentEmployer(this.currentEmployer);
     }
 
     public void loadTasksListView() {

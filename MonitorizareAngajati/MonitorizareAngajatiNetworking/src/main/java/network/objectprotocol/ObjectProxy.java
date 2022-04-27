@@ -2,6 +2,7 @@ package network.objectprotocol;
 
 import controller.IController;
 import controller.IObserver;
+import model.Employee;
 import model.Employer;
 
 import java.io.IOException;
@@ -177,17 +178,19 @@ public class ObjectProxy implements IController {
         return null;
     }
 
-    /*
     @Override
-    public void entry(Child child, List<Integer> gamesMeters) throws Exception {
-        sendRequest(new SendEntryRequest(child, gamesMeters));
+    public void addEmployee(Employee employee) throws Exception {
+        sendRequest(new AddEmployeeRequest(employee));
         Response response = readResponse();
+
         if (response instanceof ErrorResponse) {
             ErrorResponse err = (ErrorResponse) response;
+
             throw new Exception(err.getMessage());
         }
     }
 
+    /*
     @Override
     public Iterable<Child> getParticipants(Game game) {
         try {

@@ -2,6 +2,7 @@ package network.objectprotocol;
 
 import controller.IController;
 import controller.IObserver;
+import model.Employee;
 import model.Employer;
 
 import java.io.IOException;
@@ -108,6 +109,19 @@ public class ClientObjectWorker implements Runnable, IObserver {
                 Employer em = server.getEmployerByUsername(getReq.getUsername());
 
                 return new GetEmployerByUsernameResponse(em);
+            } catch (Exception e) {
+                return new ErrorResponse(e.getMessage());
+            }
+        } else if (request instanceof AddEmployeeRequest) {
+            System.out.println("Sending add employee request ...");
+
+            AddEmployeeRequest req = (AddEmployeeRequest) request;
+            Employee employee = req.getEmployee();
+
+            try {
+                server.addEmployee(employee);
+
+                return new OkResponse();
             } catch (Exception e) {
                 return new ErrorResponse(e.getMessage());
             }

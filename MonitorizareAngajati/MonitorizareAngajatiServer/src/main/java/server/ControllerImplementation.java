@@ -2,6 +2,7 @@ package server;
 
 import controller.IController;
 import controller.IObserver;
+import model.Employee;
 import model.Employer;
 import services.EmployeeService;
 import services.EmployerService;
@@ -42,6 +43,11 @@ public class ControllerImplementation implements IController {
 
     @Override
     public Employer getEmployerByUsername(String username) {
-        return null;
+        return this.employerService.getEmployerByUsername(username);
+    }
+
+    @Override
+    public void addEmployee(Employee employee) {
+        this.employeeService.save(employee);
     }
 }

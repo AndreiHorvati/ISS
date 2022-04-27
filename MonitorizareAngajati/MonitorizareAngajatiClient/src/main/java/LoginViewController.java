@@ -42,7 +42,10 @@ public class LoginViewController {
             controller.loginEmployer(employer, mainViewController);
 
             this.sceneController.changeToMainScene();
-            mainViewController.setCurrentEmployer(controller.getEmployerByUsername(username));
+
+            Employer currentEmployer = controller.getEmployerByUsername(username);
+
+            mainViewController.setCurrentEmployer(currentEmployer);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

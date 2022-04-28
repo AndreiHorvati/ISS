@@ -45,6 +45,23 @@ public class ObjectProxy implements IController {
         }
     }
 
+    @Override
+    public void loginEmployee(Employee employee, IObserver client) throws Exception {
+        this.initializeConnection();
+
+        this.sendRequest(new LoginEmployeeRequest(employee));
+        Response response = this.readResponse();
+
+        if (response instanceof OkResponse) {
+            this.client = client;
+        } else if (response instanceof ErrorResponse) {
+            ErrorResponse err = (ErrorResponse) response;
+            this.closeConnection();
+
+            throw new Exception(err.getMessage());
+        }
+    }
+
     private void closeConnection() {
         this.finished = true;
 
@@ -104,26 +121,6 @@ public class ObjectProxy implements IController {
             throw new Exception(err.getMessage());
         }
     }
-
-    @Override
-    public OfficePerson getOfficePersonByUsername(String username) {
-        try {
-            sendRequest(new GetOfficePersonByUsernameRequest(username));
-            Response response = readResponse();
-            if (response instanceof ErrorResponse) {
-                ErrorResponse err = (ErrorResponse) response;
-                throw new Exception(err.getMessage());
-            }
-            GetOfficePersonByUsernameResponse resp = (GetOfficePersonByUsernameResponse) response;
-            OfficePerson of = resp.getOfficePerson();
-
-            return of;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
      */
 
     private void startReader() {
@@ -147,29 +144,6 @@ public class ObjectProxy implements IController {
                 e.printStackTrace();
             }
         }
-
-        /*
-        OfficePerson officePerson;
-        if (update instanceof OfficePersonLoggedInResponse) {
-            OfficePersonLoggedInResponse update1 = (OfficePersonLoggedInResponse) update;
-            officePerson = update1.getOfficePerson();
-            System.out.println("OfficePerson logged in " + officePerson);
-
-            try {
-                this.client.officePersonLoggedIn(officePerson);
-            } catch (Exception var7) {
-                var7.printStackTrace();
-            }
-        }
-
-        if (update instanceof ChildEnteredResponse) {
-            try {
-                client.childEntered();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        */
     }
 
     @Override
@@ -187,6 +161,28 @@ public class ObjectProxy implements IController {
             Employer employer = resp.getEmployer();
 
             return employer;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @Override
+    public Employee getEmployeeByUsername(String username) {
+        try {
+            sendRequest(new GetEmployeeByUsernameRequest(username));
+            Response response = readResponse();
+
+            if (response instanceof ErrorResponse) {
+                ErrorResponse err = (ErrorResponse) response;
+                throw new Exception(err.getMessage());
+            }
+
+            GetEmployeeByUsernameResponse resp = (GetEmployeeByUsernameResponse) response;
+            Employee employee = resp.getEmployee();
+
+            return employee;
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -19,6 +19,10 @@ public class EmployeeService {
         return this.repository.getEmployeesOfAnEmployer(employer);
     }
 
+    public Employee getEmployeeByUsername(String username) {
+        return this.repository.getEmployeeByUsername(username);
+    }
+
     public void deleteEmployee(Employee employee) {
         this.repository.delete(employee.getId());
     }

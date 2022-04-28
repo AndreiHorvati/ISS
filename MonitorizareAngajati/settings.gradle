@@ -6,4 +6,5 @@ include 'MonitorizareAngajatiServices'
 include 'MonitorizareAngajatiController'
 include 'MonitorizareAngajatiNetworking'
 include 'MonitorizareAngajatiClient'
+include 'MonitorizareAngajatiClientSubordonat'
 

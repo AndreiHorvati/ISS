@@ -48,6 +48,38 @@ public class EmployeeORMRepository implements IEmployeeRepository {
     }
 
     @Override
+    public Employee getEmployeeByUsername(String username) {
+        Employee employee = null;
+
+        try (Session session = ORMUtils.getSessionFactory().openSession()) {
+            Transaction transaction = null;
+
+            try {
+                transaction = session.beginTransaction();
+
+                Query<Employee> query = session.createQuery("from Employee e where e.username = :username ");
+                query.setParameter("username", username);
+                List list = query.list();
+
+                if (list.size() > 0) {
+                    employee = (Employee) list.get(0);
+                }
+
+                transaction.commit();
+            } catch (Exception ex) {
+                System.err.println("Eroare la cautare " + ex);
+
+                if (transaction != null) {
+                    transaction.rollback();
+                }
+            }
+        }
+
+        return employee;
+    }
+
+
+    @Override
     public void delete(Long id) {
         try (Session session = ORMUtils.getSessionFactory().openSession()) {
             Transaction transaction = null;

@@ -15,12 +15,30 @@ public class ControllerImplementation implements IController {
     private EmployerService employerService;
 
     private Map<Long, IObserver> loggedEmployers;
+    private Map<Long, IObserver> loggedEmployees;
 
     public ControllerImplementation(EmployerService employerService, EmployeeService employeeService) {
         this.employerService = employerService;
         this.employeeService = employeeService;
 
         this.loggedEmployers = new ConcurrentHashMap<>();
+        this.loggedEmployees = new ConcurrentHashMap<>();
+    }
+
+    @Override
+    public synchronized void loginEmployee(Employee employee, IObserver client) throws Exception {
+        Employee searchedEmployee = this.employeeService.getEmployeeByUsername(employee.getUsername());
+
+        if (searchedEmployee != null) {
+            if (loggedEmployees.get(searchedEmployee.getId()) != null) {
+                throw new Exception("Employee already logged in.");
+            }
+
+            loggedEmployees.put(searchedEmployee.getId(), client);
+            //notifyOfficePersonsLoggedIn(officePerson);
+        } else {
+            throw new Exception("Authentication failed.");
+        }
     }
 
     @Override
@@ -44,6 +62,11 @@ public class ControllerImplementation implements IController {
     @Override
     public Employer getEmployerByUsername(String username) {
         return this.employerService.getEmployerByUsername(username);
+    }
+
+    @Override
+    public Employee getEmployeeByUsername(String username) {
+        return this.employeeService.getEmployeeByUsername(username);
     }
 
     @Override

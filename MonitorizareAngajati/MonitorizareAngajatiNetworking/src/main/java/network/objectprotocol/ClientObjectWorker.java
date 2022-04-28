@@ -168,6 +168,30 @@ public class ClientObjectWorker implements Runnable, IObserver {
             } catch (Exception e) {
                 return new ErrorResponse(e.getMessage());
             }
+        } else if (request instanceof GetEmployeeByUsernameRequest) {
+            System.out.println("get employee ...");
+
+            GetEmployeeByUsernameRequest getReq = (GetEmployeeByUsernameRequest) request;
+            try {
+                Employee em = server.getEmployeeByUsername(getReq.getUsername());
+
+                return new GetEmployeeByUsernameResponse(em);
+            } catch (Exception e) {
+                return new ErrorResponse(e.getMessage());
+            }
+        } else if (request instanceof LoginEmployeeRequest) {
+            System.out.println("Login employee request ...");
+            LoginEmployeeRequest loginRequest = (LoginEmployeeRequest) request;
+
+            try {
+                this.server.loginEmployee(loginRequest.getEmployee(), this);
+
+                return new OkResponse();
+            } catch (Exception var8) {
+                this.connected = false;
+
+                return new ErrorResponse(var8.getMessage());
+            }
         }
             /*
         } else if (request instanceof GetAllGamesRequest) {

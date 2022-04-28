@@ -14,6 +14,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/MonitorizareAngajatiClient" />
+            <option value="$PROJECT_DIR$/MonitorizareAngajatiClientSubordonat" />
             <option value="$PROJECT_DIR$/MonitorizareAngajatiController" />
             <option value="$PROJECT_DIR$/MonitorizareAngajatiModel" />
             <option value="$PROJECT_DIR$/MonitorizareAngajatiNetworking" />

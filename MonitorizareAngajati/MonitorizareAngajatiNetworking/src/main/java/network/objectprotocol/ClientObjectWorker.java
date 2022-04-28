@@ -62,6 +62,25 @@ public class ClientObjectWorker implements Runnable, IObserver {
         }
     }
 
+    @Override
+    public void employeeAdded() throws Exception {
+        try {
+            sendResponse(new EmployeeAddedResponse());
+        } catch (IOException e) {
+            throw new Exception("Sending error: " + e);
+        }
+    }
+
+    @Override
+    public void employeeDeleted() throws Exception {
+        try {
+            sendResponse(new EmployeeDeletedResponse());
+        } catch (IOException e) {
+            throw new Exception("Sending error: " + e);
+        }
+    }
+
+
     /*
     @Override
     public void officePersonLoggedIn(OfficePerson officePerson) throws Exception {
@@ -120,6 +139,30 @@ public class ClientObjectWorker implements Runnable, IObserver {
 
             try {
                 server.addEmployee(employee);
+
+                return new OkResponse();
+            } catch (Exception e) {
+                return new ErrorResponse(e.getMessage());
+            }
+        } else if (request instanceof GetEmployeesOfAnEmployerRequest) {
+            System.out.println("get employees ...");
+
+            GetEmployeesOfAnEmployerRequest getReq = (GetEmployeesOfAnEmployerRequest) request;
+            try {
+                Iterable<Employee> em = server.getEmployeesOfAnEmployer(getReq.getEmployer());
+
+                return new GetEmployeesOfAnEmployerResponse(em);
+            } catch (Exception e) {
+                return new ErrorResponse(e.getMessage());
+            }
+        } else if (request instanceof DeleteEmployeeRequest) {
+            System.out.println("Sending delete employee request ...");
+
+            DeleteEmployeeRequest req = (DeleteEmployeeRequest) request;
+            Employee employee = req.getEmployee();
+
+            try {
+                server.deleteEmployee(employee);
 
                 return new OkResponse();
             } catch (Exception e) {

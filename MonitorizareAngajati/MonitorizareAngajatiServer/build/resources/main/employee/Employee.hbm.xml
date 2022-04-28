@@ -29,7 +29,6 @@
 
         <many-to-one
                 name="employer"
-                cascade="all"
                 column="employer_id"/>
     </class>
 </hibernate-mapping>

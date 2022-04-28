@@ -47,7 +47,29 @@ public class ControllerImplementation implements IController {
     }
 
     @Override
-    public void addEmployee(Employee employee) {
+    public Iterable<Employee> getEmployeesOfAnEmployer(Employer employer) {
+        return this.employeeService.getEmployeesOfAnEmployer(employer);
+    }
+
+    @Override
+    public void deleteEmployee(Employee employee) throws Exception {
+        this.employeeService.deleteEmployee(employee);
+
+        for (Map.Entry<Long, IObserver> entry : loggedEmployers.entrySet()) {
+            if (entry.getKey().equals(employee.getEmployer().getId())) {
+                entry.getValue().employeeDeleted();
+            }
+        }
+    }
+
+    @Override
+    public void addEmployee(Employee employee) throws Exception {
         this.employeeService.save(employee);
+
+        for (Map.Entry<Long, IObserver> entry : loggedEmployers.entrySet()) {
+            if (entry.getKey().equals(employee.getEmployer().getId())) {
+                entry.getValue().employeeAdded();
+            }
+        }
     }
 }

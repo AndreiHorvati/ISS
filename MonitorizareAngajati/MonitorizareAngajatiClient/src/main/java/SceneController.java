@@ -41,12 +41,12 @@ public class SceneController {
         this.primaryStage.centerOnScreen();
     }
 
-    public void changeToMainScene() throws IOException {
+    public void changeToMainScene() {
         this.primaryStage.setScene(mainScene);
         this.primaryStage.setWidth(720);
-        this.primaryStage.setHeight(460);
+        this.primaryStage.setHeight(470);
         this.primaryStage.setMaxWidth(720);
-        this.primaryStage.setMaxHeight(460);
+        this.primaryStage.setMaxHeight(470);
         this.primaryStage.centerOnScreen();
     }
 

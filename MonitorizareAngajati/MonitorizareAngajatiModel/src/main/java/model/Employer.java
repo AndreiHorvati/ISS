@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class Employer extends Employed {
     private String password;
 
@@ -18,5 +20,23 @@ public class Employer extends Employed {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof Employer employer)) {
+            return false;
+        }
+
+        return getId().equals(employer.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getFirstName(), getLastName(), getUsername(), getPassword());
     }
 }

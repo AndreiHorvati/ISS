@@ -125,10 +125,25 @@ public class MainViewController implements Initializable, IObserver {
         this.employeesListViewController = loader.getController();
         this.employeesListViewController.setController(this.controller);
         this.employeesListViewController.setCurrentEmployer(this.currentEmployer);
+        this.employeesListViewController.initModel();
     }
 
     public void loadTasksListView() {
         FXMLLoader loader = new FXMLLoader(MainApplicationClient.class.getResource("views/tasks-list-view.fxml"));
         loadMainView(loader);
+    }
+
+    @Override
+    public void employeeAdded() {
+        if (this.employeesListViewController != null) {
+            this.employeesListViewController.initModel();
+        }
+    }
+
+    @Override
+    public void employeeDeleted() throws Exception {
+        if (this.employeesListViewController != null) {
+            this.employeesListViewController.initModel();
+        }
     }
 }

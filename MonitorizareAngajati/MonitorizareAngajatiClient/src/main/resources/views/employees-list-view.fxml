@@ -19,7 +19,7 @@
    <VBox alignment="CENTER" layoutX="531.0" layoutY="50.0" prefHeight="301.0" prefWidth="195.0" spacing="40.0">
       <children>
          <Button onAction="#showAddEmployeeView" mnemonicParsing="false" prefHeight="53.0" prefWidth="152.0" text="Add Employee" />
-         <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="138.0" text="Delete Employee" />
+         <Button mnemonicParsing="false" onAction="#deleteEmployeeGUI" prefHeight="51.0" prefWidth="138.0" text="Delete Employee" />
          <Button onAction="#showAddTaskView" mnemonicParsing="false" prefHeight="55.0" prefWidth="142.0" text="Add Task" />
       </children>
    </VBox>

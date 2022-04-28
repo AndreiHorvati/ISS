@@ -9,4 +9,8 @@ public interface IController {
     Employer getEmployerByUsername(String username);
 
     void addEmployee(Employee employee) throws Exception;
+
+    Iterable<Employee> getEmployeesOfAnEmployer(Employer employer);
+
+    void deleteEmployee(Employee employee) throws Exception;
 }

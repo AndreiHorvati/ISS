@@ -1,6 +1,7 @@
 package services;
 
 import model.Employee;
+import model.Employer;
 import repository.IEmployeeRepository;
 
 public class EmployeeService {
@@ -12,5 +13,13 @@ public class EmployeeService {
 
     public void save(Employee employee) {
         this.repository.save(employee);
+    }
+
+    public Iterable<Employee> getEmployeesOfAnEmployer(Employer employer) {
+        return this.repository.getEmployeesOfAnEmployer(employer);
+    }
+
+    public void deleteEmployee(Employee employee) {
+        this.repository.delete(employee.getId());
     }
 }

@@ -1,11 +1,16 @@
 package repository;
 
 import model.Employee;
+import model.Employer;
 import org.hibernate.*;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.query.Query;
 import utils.ORMUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmployeeORMRepository implements IEmployeeRepository {
 
@@ -65,6 +70,33 @@ public class EmployeeORMRepository implements IEmployeeRepository {
                     transaction.rollback();
             }
         }
+    }
+
+    public Iterable<Employee> getEmployeesOfAnEmployer(Employer employer) {
+        List<Employee> employees = new ArrayList<>();
+
+        try (Session session = ORMUtils.getSessionFactory().openSession()) {
+            Transaction transaction = null;
+
+            try {
+                transaction = session.beginTransaction();
+
+                Query<Employee> query = session.createQuery("from Employee e where e.employer = :employer ");
+                query.setParameter("employer", employer);
+
+                employees = query.list();
+
+                transaction.commit();
+            } catch (Exception ex) {
+                System.err.println("Eroare la cautare " + ex);
+
+                if (transaction != null) {
+                    transaction.rollback();
+                }
+            }
+        }
+
+        return employees;
     }
 
     @Override

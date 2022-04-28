@@ -132,6 +132,22 @@ public class ObjectProxy implements IController {
     }
 
     private void handleUpdate(UpdateResponse update) {
+        if (update instanceof EmployeeAddedResponse) {
+            try {
+                client.employeeAdded();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (update instanceof EmployeeDeletedResponse) {
+            try {
+                client.employeeDeleted();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         /*
         OfficePerson officePerson;
         if (update instanceof OfficePersonLoggedInResponse) {
@@ -181,6 +197,40 @@ public class ObjectProxy implements IController {
     @Override
     public void addEmployee(Employee employee) throws Exception {
         sendRequest(new AddEmployeeRequest(employee));
+        Response response = readResponse();
+
+        if (response instanceof ErrorResponse) {
+            ErrorResponse err = (ErrorResponse) response;
+
+            throw new Exception(err.getMessage());
+        }
+    }
+
+    @Override
+    public Iterable<Employee> getEmployeesOfAnEmployer(Employer employer) {
+        try {
+            sendRequest(new GetEmployeesOfAnEmployerRequest(employer));
+            Response response = readResponse();
+
+            if (response instanceof ErrorResponse) {
+                ErrorResponse err = (ErrorResponse) response;
+                throw new Exception(err.getMessage());
+            }
+
+            GetEmployeesOfAnEmployerResponse resp = (GetEmployeesOfAnEmployerResponse) response;
+            Iterable<Employee> employees = resp.getEmployees();
+
+            return employees;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @Override
+    public void deleteEmployee(Employee employee) throws Exception {
+        sendRequest(new DeleteEmployeeRequest(employee));
         Response response = readResponse();
 
         if (response instanceof ErrorResponse) {

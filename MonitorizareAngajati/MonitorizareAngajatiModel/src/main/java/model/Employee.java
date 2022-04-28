@@ -5,7 +5,7 @@ public class Employee extends Employed {
     private Employer employer;
 
     public Employer getEmployer() {
-        return employer;
+        return this.employer;
     }
 
     public void setEmployer(Employer employer) {
@@ -24,7 +24,7 @@ public class Employee extends Employed {
     }
 
     public int getHour() {
-        return hour;
+        return this.hour;
     }
 
     public void setHour(int hour) {

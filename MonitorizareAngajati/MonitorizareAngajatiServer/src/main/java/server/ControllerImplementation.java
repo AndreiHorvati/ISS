@@ -78,7 +78,7 @@ public class ControllerImplementation implements IController {
     public void deleteEmployee(Employee employee) throws Exception {
         this.employeeService.deleteEmployee(employee);
 
-        for (Map.Entry<Long, IObserver> entry : loggedEmployers.entrySet()) {
+        for (Map.Entry<Long, IObserver> entry : loggedEmployees.entrySet()) {
             if (entry.getKey().equals(employee.getEmployer().getId())) {
                 entry.getValue().employeeDeleted();
             }

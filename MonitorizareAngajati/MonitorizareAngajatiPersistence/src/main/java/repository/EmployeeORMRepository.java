@@ -3,9 +3,6 @@ package repository;
 import model.Employee;
 import model.Employer;
 import org.hibernate.*;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
 import utils.ORMUtils;
 
@@ -27,6 +24,7 @@ public class EmployeeORMRepository implements IEmployeeRepository {
         return null;
     }
 
+    @Override
     public void save(Employee employee) {
         try (Session session = ORMUtils.getSessionFactory().openSession()) {
             Transaction transaction = null;
@@ -104,6 +102,7 @@ public class EmployeeORMRepository implements IEmployeeRepository {
         }
     }
 
+    @Override
     public Iterable<Employee> getEmployeesOfAnEmployer(Employer employer) {
         List<Employee> employees = new ArrayList<>();
 

@@ -1,6 +1,4 @@
 import controller.IController;
-import model.Employee;
-import model.Employer;
 import network.utils.AbstractServer;
 import network.utils.ObjectConcurrentServer;
 import repository.EmployeeORMRepository;

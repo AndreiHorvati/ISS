@@ -4,6 +4,7 @@ import controller.IController;
 import controller.IObserver;
 import model.Employee;
 import model.Employer;
+import model.Task;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -80,6 +81,42 @@ public class ClientObjectWorker implements Runnable, IObserver {
         }
     }
 
+    @Override
+    public void taskAdded() throws Exception {
+        try {
+            sendResponse(new TaskAddedResponse());
+        } catch (IOException e) {
+            throw new Exception("Sending error: " + e);
+        }
+    }
+
+    @Override
+    public void taskDeleted() throws Exception {
+        try {
+            sendResponse(new TaskDeletedResponse());
+        } catch (IOException e) {
+            throw new Exception("Sending error: " + e);
+        }
+    }
+
+    @Override
+    public void taskUpdated() throws Exception {
+        try {
+            sendResponse(new TaskUpdatedResponse());
+        } catch (IOException e) {
+            throw new Exception("Sending error: " + e);
+        }
+    }
+
+    @Override
+    public void employeeUpdated() throws Exception {
+        try {
+            sendResponse(new EmployeeUpdated());
+        } catch (IOException e) {
+            throw new Exception("Sending error: " + e);
+        }
+    }
+
 
     /*
     @Override
@@ -131,6 +168,30 @@ public class ClientObjectWorker implements Runnable, IObserver {
             } catch (Exception e) {
                 return new ErrorResponse(e.getMessage());
             }
+        } else if (request instanceof LogoutEmployerRequest) {
+            System.out.println("Logout request");
+            LogoutEmployerRequest logReq = (LogoutEmployerRequest) request;
+            Employer em = logReq.getEmployer();
+            try {
+                server.logoutEmployer(em, this);
+                connected = false;
+                return new OkResponse();
+
+            } catch (Exception e) {
+                return new ErrorResponse(e.getMessage());
+            }
+        } else if (request instanceof LogoutEmployeeRequest) {
+            System.out.println("Logout request");
+            LogoutEmployeeRequest logReq = (LogoutEmployeeRequest) request;
+            Employee em = logReq.getEmployee();
+            try {
+                server.logoutEmployee(em, this);
+                connected = false;
+                return new OkResponse();
+
+            } catch (Exception e) {
+                return new ErrorResponse(e.getMessage());
+            }
         } else if (request instanceof AddEmployeeRequest) {
             System.out.println("Sending add employee request ...");
 
@@ -139,6 +200,19 @@ public class ClientObjectWorker implements Runnable, IObserver {
 
             try {
                 server.addEmployee(employee);
+
+                return new OkResponse();
+            } catch (Exception e) {
+                return new ErrorResponse(e.getMessage());
+            }
+        } else if (request instanceof AddTaskRequest) {
+            System.out.println("Sending add task request ...");
+
+            AddTaskRequest req = (AddTaskRequest) request;
+            Task task = req.getTask();
+
+            try {
+                server.addTask(task);
 
                 return new OkResponse();
             } catch (Exception e) {
@@ -155,6 +229,44 @@ public class ClientObjectWorker implements Runnable, IObserver {
             } catch (Exception e) {
                 return new ErrorResponse(e.getMessage());
             }
+        } else if (request instanceof UpdateTaskRequest) {
+            System.out.println("Sending update task request ...");
+
+            UpdateTaskRequest req = (UpdateTaskRequest) request;
+            Task task = req.getTask();
+
+            try {
+                server.updateTask(task);
+
+                return new OkResponse();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                System.out.println(e.getClass());
+                System.out.println(e.getCause());
+                return new ErrorResponse(e.getMessage());
+            }
+        } else if (request instanceof GetTasksOfAnEmployeeRequest) {
+            System.out.println("get tasks ...");
+
+            GetTasksOfAnEmployeeRequest getReq = (GetTasksOfAnEmployeeRequest) request;
+            try {
+                Iterable<Task> t = server.getTasksOfAnEmployee(getReq.getEmployee());
+
+                return new GetTasksOfAnEmployeeResponse(t);
+            } catch (Exception e) {
+                return new ErrorResponse(e.getMessage());
+            }
+        } else if (request instanceof GetTasksOfAnEmployerRequest) {
+            System.out.println("get tasks ...");
+
+            GetTasksOfAnEmployerRequest getReq = (GetTasksOfAnEmployerRequest) request;
+            try {
+                Iterable<Task> t = server.getTasksOfAnEmployer(getReq.getEmployer());
+
+                return new GetTasksOfAnEmployerResponse(t);
+            } catch (Exception e) {
+                return new ErrorResponse(e.getMessage());
+            }
         } else if (request instanceof DeleteEmployeeRequest) {
             System.out.println("Sending delete employee request ...");
 
@@ -168,6 +280,19 @@ public class ClientObjectWorker implements Runnable, IObserver {
             } catch (Exception e) {
                 return new ErrorResponse(e.getMessage());
             }
+        } else if (request instanceof DeleteTaskRequest) {
+            System.out.println("Sending delete task request ...");
+
+            DeleteTaskRequest req = (DeleteTaskRequest) request;
+            Task task = req.getTask();
+
+            try {
+                server.deleteTask(task);
+
+                return new OkResponse();
+            } catch (Exception e) {
+                return new ErrorResponse(e.getMessage());
+            }
         } else if (request instanceof GetEmployeeByUsernameRequest) {
             System.out.println("get employee ...");
 
@@ -176,6 +301,22 @@ public class ClientObjectWorker implements Runnable, IObserver {
                 Employee em = server.getEmployeeByUsername(getReq.getUsername());
 
                 return new GetEmployeeByUsernameResponse(em);
+            } catch (Exception e) {
+                return new ErrorResponse(e.getMessage());
+            }
+        } else if (request instanceof UpdateEmployeeRequest) {
+            System.out.println("Sending update employee request ...");
+
+            UpdateEmployeeRequest req = (UpdateEmployeeRequest) request;
+
+            System.out.println("Worker: " + req.getEmployee().getHour());
+            Employee ee = req.getEmployee();
+            ee.setHour(req.getHour());
+
+            try {
+                server.updateEmployee(ee);
+
+                return new OkResponse();
             } catch (Exception e) {
                 return new ErrorResponse(e.getMessage());
             }

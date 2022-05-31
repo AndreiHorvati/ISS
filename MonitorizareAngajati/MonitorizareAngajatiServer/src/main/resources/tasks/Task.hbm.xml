@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="model.Task"
+           table="Tasks">
+
+        <id name="id" column="id" type="long">
+            <generator class="native"/>
+        </id>
+
+        <property name="name" column="name" type="java.lang.String"/>
+
+        <property name="description" column="description" type="java.lang.String"/>
+
+        <property name="status" column="status" insert="true" update="true" index="true">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">model.Status</param>
+                <param name="useNamed">true</param>
+                <param name="type">12</param>
+            </type>
+        </property>
+
+        <many-to-one not-null="false" name="employee" class="model.Employee" column="id_employee"/>
+
+        <property name="deadline" column="deadline" type="java.time.LocalDateTime"/>
+    </class>
+</hibernate-mapping>

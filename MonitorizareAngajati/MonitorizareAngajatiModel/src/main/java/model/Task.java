@@ -1,20 +1,37 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
 
 public class Task extends Entity<Long> {
-    public enum Status { FINISHED, UNFINISHED };
-
     private String name;
     private String description;
     private LocalDateTime deadline;
+
     private Status status;
 
-    public Task(String name, String description, LocalDateTime deadline) {
+    private Employee employee;
+
+    public Task() {
+        super();
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Task(String name, String description, LocalDateTime deadline, Employee employee) {
         this.name = name;
         this.description = description;
         this.deadline = deadline;
         this.status = Status.UNFINISHED;
+        this.employee = employee;
     }
 
     public String getName() {

@@ -4,6 +4,7 @@ import controller.IController;
 import controller.IObserver;
 import model.Employee;
 import model.Employer;
+import model.Task;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -144,6 +145,35 @@ public class ObjectProxy implements IController {
                 e.printStackTrace();
             }
         }
+
+        if (update instanceof TaskAddedResponse) {
+            try {
+                client.taskAdded();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (update instanceof TaskDeletedResponse)
+            try {
+                client.taskDeleted();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        if (update instanceof TaskUpdatedResponse)
+            try {
+                client.taskUpdated();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        if (update instanceof EmployeeUpdated)
+            try {
+                client.employeeUpdated();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
     }
 
     @Override
@@ -225,9 +255,125 @@ public class ObjectProxy implements IController {
     }
 
     @Override
+    public Iterable<Task> getTasksOfAnEmployee(Employee employee) {
+        try {
+            sendRequest(new GetTasksOfAnEmployeeRequest(employee));
+            Response response = readResponse();
+
+            if (response instanceof ErrorResponse) {
+                ErrorResponse err = (ErrorResponse) response;
+                throw new Exception(err.getMessage());
+            }
+
+            GetTasksOfAnEmployeeResponse resp = (GetTasksOfAnEmployeeResponse) response;
+            Iterable<Task> tasks = resp.getTasks();
+
+            return tasks;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @Override
+    public Iterable<Task> getTasksOfAnEmployer(Employer employer) {
+        try {
+            sendRequest(new GetTasksOfAnEmployerRequest(employer));
+            Response response = readResponse();
+
+            if (response instanceof ErrorResponse) {
+                ErrorResponse err = (ErrorResponse) response;
+                throw new Exception(err.getMessage());
+            }
+
+            GetTasksOfAnEmployerResponse resp = (GetTasksOfAnEmployerResponse) response;
+            Iterable<Task> tasks = resp.getTasks();
+
+            return tasks;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @Override
     public void deleteEmployee(Employee employee) throws Exception {
         sendRequest(new DeleteEmployeeRequest(employee));
         Response response = readResponse();
+
+        if (response instanceof ErrorResponse) {
+            ErrorResponse err = (ErrorResponse) response;
+
+            throw new Exception(err.getMessage());
+        }
+    }
+
+    @Override
+    public void deleteTask(Task task) throws Exception {
+        sendRequest(new DeleteTaskRequest(task));
+        Response response = readResponse();
+
+        if (response instanceof ErrorResponse) {
+            ErrorResponse err = (ErrorResponse) response;
+
+            throw new Exception(err.getMessage());
+        }
+    }
+
+    @Override
+    public void addTask(Task task) throws Exception {
+        sendRequest(new AddTaskRequest(task));
+        Response response = readResponse();
+
+        if (response instanceof ErrorResponse) {
+            ErrorResponse err = (ErrorResponse) response;
+
+            throw new Exception(err.getMessage());
+        }
+    }
+
+    @Override
+    public void updateTask(Task task) throws Exception {
+        sendRequest(new UpdateTaskRequest(task));
+        Response response = readResponse();
+
+        if (response instanceof ErrorResponse) {
+            ErrorResponse err = (ErrorResponse) response;
+
+            throw new Exception(err.getMessage());
+        }
+    }
+
+    @Override
+    public void logoutEmployer(Employer employer, IObserver observer) throws Exception {
+        sendRequest(new LogoutEmployerRequest(employer));
+        Response response = readResponse();
+        closeConnection();
+        if (response instanceof ErrorResponse) {
+            ErrorResponse err = (ErrorResponse) response;
+            throw new Exception(err.getMessage());
+        }
+    }
+
+    @Override
+    public void logoutEmployee(Employee employee, IObserver observer) throws Exception {
+        sendRequest(new LogoutEmployeeRequest(employee));
+        Response response = readResponse();
+        closeConnection();
+        if (response instanceof ErrorResponse) {
+            ErrorResponse err = (ErrorResponse) response;
+            throw new Exception(err.getMessage());
+        }
+    }
+
+    @Override
+    public void updateEmployee(Employee employee) throws Exception {
+        sendRequest(new UpdateEmployeeRequest(employee, employee.getHour()));
+        Response response = readResponse();
+
+        System.out.println("Proxy: " + employee.getHour());
 
         if (response instanceof ErrorResponse) {
             ErrorResponse err = (ErrorResponse) response;

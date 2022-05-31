@@ -1,16 +1,18 @@
 import controller.IController;
+import model.Employee;
+import model.Employer;
+import model.Task;
 import network.utils.AbstractServer;
 import network.utils.ObjectConcurrentServer;
-import repository.EmployeeORMRepository;
-import repository.EmployerORMRepository;
-import repository.IEmployeeRepository;
-import repository.IEmployerRepository;
+import repository.*;
 import server.ControllerImplementation;
 import services.EmployeeService;
 import services.EmployerService;
+import services.TaskService;
 import utils.ORMUtils;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Properties;
 
 public class StartObjectServer {
@@ -30,11 +32,13 @@ public class StartObjectServer {
         }
         IEmployerRepository employerRepository = new EmployerORMRepository();
         IEmployeeRepository employeeRepository = new EmployeeORMRepository();
+        ITaskRepository taskRepository = new TaskORMRepository();
 
         EmployerService employerService = new EmployerService(employerRepository);
         EmployeeService employeeService = new EmployeeService(employeeRepository);
+        TaskService taskService = new TaskService(taskRepository);
 
-        IController controller = new ControllerImplementation(employerService, employeeService);
+        IController controller = new ControllerImplementation(employerService, employeeService, taskService);
 
         int serverPort = defaultPort;
         try {

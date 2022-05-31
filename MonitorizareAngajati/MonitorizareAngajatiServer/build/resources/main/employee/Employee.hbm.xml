@@ -25,10 +25,10 @@
 
         <property
                 name="hour"
-                column="hour"  type="int"/>
+                column="hour" type="int"/>
 
-        <many-to-one
-                name="employer"
+        <many-to-one not-null="true" cascade="merge"
+                name="employer" class="model.Employer"
                 column="employer_id"/>
     </class>
 </hibernate-mapping>

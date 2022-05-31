@@ -15,12 +15,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Employee;
 import model.Employer;
+import model.Status;
 
 import java.io.IOException;
 import java.util.List;
 
 public class EmployeesListViewController {
     private AddEmployeeViewController addEmployeeViewController;
+    private AddTaskViewController addTaskViewController;
 
     private IController controller;
     private Employer currentEmployer;
@@ -53,6 +55,10 @@ public class EmployeesListViewController {
 
         dialogStage.setScene(scene);
         dialogStage.show();
+
+        this.addTaskViewController = loader.getController();
+        this.addTaskViewController.setController(this.controller);
+        this.addTaskViewController.setSelectedEmployee(this.tableView.getSelectionModel().getSelectedItem());
     }
 
     public void showAddEmployeeView() throws IOException {
@@ -85,12 +91,16 @@ public class EmployeesListViewController {
                     @Override
                     protected void updateItem(Employee item, boolean empty) {
                         super.updateItem(item, empty);
-                        if (item == null)
+
+                        if (item == null) {
                             setStyle("");
-                        else if (item.getHour() == -1)
+                        }
+                        else if (item.getHour() == -1) {
                             setStyle("-fx-background-color: #ff6666;");
-                        else
-                            setStyle("");
+                        }
+                        else {
+                            setStyle("-fx-background-color: #00cc44;");
+                        }
                     }
                 });
             } catch (Exception e) {

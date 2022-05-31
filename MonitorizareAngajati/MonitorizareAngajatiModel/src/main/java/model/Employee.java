@@ -19,6 +19,13 @@ public class Employee extends Employed {
         this.hour = -1;
     }
 
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "employer=" + employer +
+                '}';
+    }
+
     public Employee() {
         super();
     }

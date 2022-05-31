@@ -131,7 +131,24 @@ public class EmployeeORMRepository implements IEmployeeRepository {
     }
 
     @Override
-    public void update(Employee entity) {
+    public void update(Employee employee) {
+        System.out.println("Repo: " + employee.getHour());
 
+        try (Session session = ORMUtils.getSessionFactory().openSession()) {
+            Transaction transaction = null;
+
+            try {
+                transaction = session.beginTransaction();
+
+                session.update(employee);
+
+                transaction.commit();
+            } catch (RuntimeException ex) {
+                System.err.println("Eroare la stergere " + ex);
+
+                if (transaction != null)
+                    transaction.rollback();
+            }
+        }
     }
 }

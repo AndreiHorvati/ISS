@@ -26,4 +26,8 @@ public class EmployeeService {
     public void deleteEmployee(Employee employee) {
         this.repository.delete(employee.getId());
     }
+
+    public void updateEmployee(Employee employee) {
+        this.repository.update(employee);
+    }
 }

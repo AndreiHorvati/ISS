@@ -23,6 +23,13 @@ public class Employer extends Employed {
     }
 
     @Override
+    public String toString() {
+        return "Employer{" +
+                "username='" + username + '\'' +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

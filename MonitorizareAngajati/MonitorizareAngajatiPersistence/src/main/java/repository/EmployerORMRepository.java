@@ -1,11 +1,14 @@
 package repository;
 
 import model.Employer;
+import model.Task;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import utils.ORMUtils;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class EmployerORMRepository implements IEmployerRepository {
@@ -42,6 +45,49 @@ public class EmployerORMRepository implements IEmployerRepository {
         }
 
         return employer;
+    }
+
+    @Override
+    public Iterable<Task> getTasksOfAnEmployer(Employer employer) {
+        List<Task> tasks = new ArrayList<>();
+        List<Task> tasks2 = new ArrayList<>();
+
+        try(Session session = ORMUtils.getSessionFactory().openSession()) {
+            Transaction transaction = null;
+
+            try {
+                transaction = session.beginTransaction();
+
+                Query<Task> query = session.createQuery("from Task t");
+
+                tasks = query.list();
+
+                Iterator it = tasks.iterator();
+
+                while (it.hasNext()) {
+                    Object o = (Object) it.next();
+                    Task t = (Task) o;
+
+                    if (t.getEmployee().getEmployer().getId().equals(employer.getId())) {
+                        tasks2.add(t);
+                    }
+                }
+
+                transaction.commit();
+            } catch (Exception ex) {
+                System.err.println("Eroare la cautare " + ex);
+
+                if (transaction != null) {
+                    transaction.rollback();
+                }
+            }
+
+            for (Task task : tasks) {
+                System.out.println(task.getEmployee().getEmployer().getId());
+            }
+        }
+
+        return tasks2;
     }
 
     @Override

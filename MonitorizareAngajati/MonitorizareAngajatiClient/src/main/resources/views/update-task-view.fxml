@@ -10,20 +10,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane fx:id="wrapper" prefHeight="431.0" prefWidth="273.0" stylesheets="@../css/add-task-view.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="wrapper" prefHeight="455.0" prefWidth="273.0" stylesheets="@../css/add-task-view.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UpdateTaskViewController">
     <children>
-        <VBox prefHeight="431.0" prefWidth="273.0">
+        <VBox layoutY="-1.0" prefHeight="462.0" prefWidth="273.0">
             <children>
                 <Label text="Name:" textFill="WHITE">
                     <font>
                         <Font size="18.0" />
                     </font>
                     <VBox.margin>
-                        <Insets left="25.0" top="20.0" />
+                        <Insets left="25.0" top="15.0" />
                     </VBox.margin>
                 </Label>
-                <TextField maxWidth="150.0" prefHeight="26.0" prefWidth="199.0">
+                <TextField fx:id="nameTextField" maxWidth="150.0" prefHeight="26.0" prefWidth="199.0">
                     <VBox.margin>
                         <Insets left="25.0" top="5.0" />
                     </VBox.margin>
@@ -33,10 +32,10 @@
                         <Font size="18.0" />
                     </font>
                     <VBox.margin>
-                        <Insets left="25.0" top="30.0" />
+                        <Insets left="25.0" top="20.0" />
                     </VBox.margin>
                 </Label>
-                <TextArea maxWidth="220.0" prefHeight="120.0" prefWidth="229.0">
+                <TextArea fx:id="descriptionTextArea" maxWidth="220.0" prefHeight="120.0" prefWidth="229.0">
                     <VBox.margin>
                         <Insets left="25.0" top="5.0" />
                     </VBox.margin>
@@ -46,17 +45,30 @@
                         <Font size="18.0" />
                     </font>
                     <VBox.margin>
-                        <Insets left="25.0" top="30.0" />
+                        <Insets left="25.0" top="15.0" />
                     </VBox.margin>
                 </Label>
-                <DatePicker>
+                <DatePicker fx:id="deadlineDatePicker">
                     <VBox.margin>
                         <Insets left="25.0" top="5.0" />
                     </VBox.margin>
                 </DatePicker>
-                <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="113.0" text="Update Task">
+                <Label text="Hour:" textFill="WHITE">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
                     <VBox.margin>
-                        <Insets left="80.0" top="30.0" />
+                        <Insets left="24.0" top="20.0" />
+                    </VBox.margin>
+                </Label>
+                <TextField fx:id="hourTextField" maxWidth="150.0" prefHeight="26.0" prefWidth="199.0">
+                    <VBox.margin>
+                        <Insets left="25.0" top="5.0" />
+                    </VBox.margin>
+                </TextField>
+                <Button fx:id="updateTaskButton" onAction="#onUpdateTaskButtonPressed" mnemonicParsing="false" prefHeight="41.0" prefWidth="113.0" text="Update Task">
+                    <VBox.margin>
+                        <Insets left="80.0" top="25.0" />
                     </VBox.margin>
                 </Button>
             </children>
